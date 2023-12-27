@@ -47,7 +47,7 @@ if (CayenneLPPDec::ParseLPP(lpp.getBuffer(), lpp.getSize(), root))
 */
 
 
-bool CayenneLPPDec::ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray& root)
+bool CayenneLPPDec::ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray root)
 {
 
     while (Len > 2)
