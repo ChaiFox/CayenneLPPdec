@@ -26,7 +26,7 @@
 class CayenneLPPDec
 {
   public:
-     static bool ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray& root);
+     static bool ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray root);
 };
 
 
