@@ -47,118 +47,116 @@ if (CayenneLPPDec::ParseLPP(lpp.getBuffer(), lpp.getSize(), root))
 */
 
 
-bool CayenneLPPDec::ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray root)
-{
+bool CayenneLPPDec::ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray root) {
 
-    while (Len > 2)
-    {
+    while (Len > 2) {
         uint8_t channel = pBuffer[0];
         uint8_t lpp_type = pBuffer[1];
 
         if (lpp_type == LPP_DIGITAL_INPUT) {
-            if (Len < LPP_DIGITAL_INPUT_SIZE)
+            if (Len < LPP_DIGITAL_INPUT_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "digital_input";
             data["value"] = pBuffer[2];
 
-            pBuffer += LPP_DIGITAL_INPUT_SIZE;
-            Len -= LPP_DIGITAL_INPUT_SIZE;
+            pBuffer += (LPP_DIGITAL_INPUT_SIZE+2);
+            Len -= (LPP_DIGITAL_INPUT_SIZE+2);
         } else if (lpp_type == LPP_DIGITAL_OUTPUT) {
-            if (Len < LPP_DIGITAL_OUTPUT_SIZE)
+            if (Len < LPP_DIGITAL_OUTPUT_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "digital_output";
             data["value"] = pBuffer[2];
 
-            pBuffer += LPP_DIGITAL_OUTPUT_SIZE;
-            Len -= LPP_DIGITAL_OUTPUT_SIZE;
+            pBuffer += (LPP_DIGITAL_OUTPUT_SIZE+2);
+            Len -= (LPP_DIGITAL_OUTPUT_SIZE+2);
         } else if (lpp_type == LPP_ANALOG_INPUT) {
-            if (Len < LPP_ANALOG_INPUT_SIZE)
+            if (Len < LPP_ANALOG_INPUT_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "analog_input";
 
             float value = float ((pBuffer[2] << 8) | pBuffer[3]) / 100.0f;
             data["value"] = value;
 
-            pBuffer += LPP_ANALOG_INPUT_SIZE;
-            Len -= LPP_ANALOG_INPUT_SIZE;
+            pBuffer += (LPP_ANALOG_INPUT_SIZE+2);
+            Len -= (LPP_ANALOG_INPUT_SIZE+2);
         } else if (lpp_type == LPP_ANALOG_OUTPUT) {
-            if (Len < LPP_ANALOG_OUTPUT_SIZE)
+            if (Len < LPP_ANALOG_OUTPUT_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "analog_output";
 
             float value = float ((pBuffer[2] << 8) | pBuffer[3]) / 100.0f;
             data["value"] = value;
 
-            pBuffer += LPP_ANALOG_OUTPUT_SIZE;
-            Len -= LPP_ANALOG_OUTPUT_SIZE;
+            pBuffer += (LPP_ANALOG_OUTPUT_SIZE+2);
+            Len -= (LPP_ANALOG_OUTPUT_SIZE+2);
         } else if (lpp_type == LPP_LUMINOSITY) {
-            if (Len < LPP_LUMINOSITY_SIZE)
+            if (Len < LPP_LUMINOSITY_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "luminosity";
 
             uint16_t value = (pBuffer[2] << 8) | pBuffer[3];
             data["value"] = value;
 
-            pBuffer += LPP_LUMINOSITY_SIZE;
-            Len -= LPP_LUMINOSITY_SIZE;
+            pBuffer += (LPP_LUMINOSITY_SIZE;
+            Len -= (LPP_LUMINOSITY_SIZE;
         } else if (lpp_type == LPP_PRESENCE) {
-            if (Len < LPP_PRESENCE_SIZE)
+            if (Len < LPP_PRESENCE_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "presence";
 
             data["value"] = pBuffer[2];
 
-            pBuffer += LPP_PRESENCE_SIZE;
-            Len -= LPP_PRESENCE_SIZE;
+            pBuffer += (LPP_PRESENCE_SIZE+2);
+            Len -= (LPP_PRESENCE_SIZE+2);
         } else if (lpp_type == LPP_TEMPERATURE) {
-            if (Len < LPP_TEMPERATURE_SIZE)
+            if (Len < LPP_TEMPERATURE_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "temp";
 
             float value = float (int16_t ((pBuffer[2] << 8) | pBuffer[3])) / 10.0f;
             data["value"] = value;
 
-            pBuffer += LPP_TEMPERATURE_SIZE;
-            Len -= LPP_TEMPERATURE_SIZE;
+            pBuffer += (LPP_TEMPERATURE_SIZE+2);
+            Len -= (LPP_TEMPERATURE_SIZE+2);
         } else if (lpp_type == LPP_RELATIVE_HUMIDITY) {
-            if (Len < LPP_RELATIVE_HUMIDITY_SIZE)
+            if (Len < LPP_RELATIVE_HUMIDITY_SIZE+2)
                 return false;
             
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "humidity";
 
             float value = float (pBuffer[2]) / 2.0f;
             data["value"] = value;
 
-            pBuffer += LPP_RELATIVE_HUMIDITY_SIZE;
-            Len -= LPP_RELATIVE_HUMIDITY_SIZE;
+            pBuffer += (LPP_RELATIVE_HUMIDITY_SIZE+2);
+            Len -= (LPP_RELATIVE_HUMIDITY_SIZE+2);
         } else if (lpp_type == LPP_ACCELEROMETER) {
-            if (Len < LPP_ACCELEROMETER_SIZE)
+            if (Len < LPP_ACCELEROMETER_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "accel";
 
@@ -172,39 +170,39 @@ bool CayenneLPPDec::ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray root
             value = float (tvalue) / 1000.0f;
             data["Z"] = value;
 
-            pBuffer += LPP_ACCELEROMETER_SIZE;
-            Len -= LPP_ACCELEROMETER_SIZE;
+            pBuffer += (LPP_ACCELEROMETER_SIZE+2);
+            Len -= (LPP_ACCELEROMETER_SIZE+2);
         } else if (lpp_type == LPP_BAROMETRIC_PRESSURE) {
-            if (Len < LPP_BAROMETRIC_PRESSURE_SIZE)
+            if (Len < LPP_BAROMETRIC_PRESSURE_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "baro";
 
             float value = float (int16_t ((pBuffer[2] << 8) | pBuffer[3])) / 10.0f;
             data["value"] = value;
 
-            pBuffer += LPP_BAROMETRIC_PRESSURE_SIZE;
-            Len -= LPP_BAROMETRIC_PRESSURE_SIZE;
+            pBuffer += (LPP_BAROMETRIC_PRESSURE_SIZE+2);
+            Len -= (LPP_BAROMETRIC_PRESSURE_SIZE+2);
         } else if (lpp_type == LPP_UNIXTIME) {
-            if (Len < LPP_UNIXTIME_SIZE)
+            if (Len < LPP_UNIXTIME_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "unixtime";
 
             uint32_t value = (pBuffer[2] << 24) | (pBuffer[3] << 16) | (pBuffer[4] << 8) | pBuffer[5];
             data["value"] = value;
 
-            pBuffer += LPP_UNIXTIME_SIZE;
-            Len -= LPP_UNIXTIME_SIZE;
+            pBuffer += (LPP_UNIXTIME_SIZE+2);
+            Len -= (LPP_UNIXTIME_SIZE+2);
         } else if (lpp_type == LPP_GYROMETER) {
-            if (Len < LPP_GYROMETER_SIZE)
+            if (Len < LPP_GYROMETER_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "gyro";
 
@@ -218,13 +216,13 @@ bool CayenneLPPDec::ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray root
             value = float (tvalue) / 100.0f;
             data["Z"] = value;
 
-            pBuffer += LPP_GYROMETER_SIZE;
-            Len -= LPP_GYROMETER_SIZE;
+            pBuffer += (LPP_GYROMETER_SIZE+2);
+            Len -= (LPP_GYROMETER_SIZE+2);
         } else if (lpp_type == LPP_GPS) {
-            if (Len < LPP_GPS_SIZE)
+            if (Len < LPP_GPS_SIZE+2)
                 return false;
 
-            JsonObject data = root.createNestedObject ();
+            JsonObject data = root.createNestedObject();
             data["channel"] = channel;
             data["type"] = "gps";
 
@@ -244,13 +242,12 @@ bool CayenneLPPDec::ParseLPP (const uint8_t *pBuffer, size_t Len, JsonArray root
             value = float (tvalue) / 100.0f;
             data["alt"] = value;
 
-            pBuffer += LPP_GPS_SIZE;
-            Len -= LPP_GPS_SIZE;
+            pBuffer += (LPP_GPS_SIZE+2);
+            Len -= (LPP_GPS_SIZE+2);
         } else {
             return false;
         }
     }
+    
     return (Len == 0);
 }
-
-
